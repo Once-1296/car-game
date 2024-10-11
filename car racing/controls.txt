@@ -5,6 +5,7 @@ Left/Right - Switches lane to either direction
 If a car crashes with another vehicle, game is over
 
 A circle gives immunity for a short time
+//feature not added in code yet. I don't know how to implement it
 
 Press enter, and backspace to switch windows
 

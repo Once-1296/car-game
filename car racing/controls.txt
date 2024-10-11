@@ -1,0 +1,11 @@
+Up - Moves car up
+Down - Moves car down
+Left/Right - Switches lane to either direction
+
+If a car crashes with another vehicle, game is over
+
+A circle gives immunity for a short time
+
+Press enter, and backspace to switch windows
+
+Press spacebar to pause game

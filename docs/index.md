@@ -7,7 +7,7 @@ Welcome to the documentation for the **Endless Car Highway**, a simple SFML-base
 
 ## ⚙️ Setting Up the Project (Visual Studio + SFML)
 
-Follow these steps to build and run the simulator on **Windows**:
+Follow these steps to build and run the game on **Windows**:
 
 1. Install **Visual Studio 2022** (with C++ Desktop Development tools).  
 2. Download and install **SFML 2.6+**.  
@@ -45,13 +45,13 @@ For someone who had worked almost entirely in console before, there was much cat
 
 And much more!
 
-Thankfully a YouTube playlist did make my journey smoother and easy to understand by explaining these concepts with proper code. Although I did only watch GAME 1 (videos 1 to 12), the rest of the playlist is just as enlightening if not more and can help to create even more diverse types of game swith SFML.
+Thankfully a YouTube playlist did make my journey smoother and easy to understand by explaining these concepts with proper code. Although I did only watch GAME 1 (videos 1 to 12), the rest of the playlist is just as enlightening if not more and can help to create even more diverse types of games swith SFML.
 
 [![YouTube Game Guide](assets/img4.png)](https://youtube.com/playlist?list=PL6xSOsbVA1eb_QqMTTcql_3PdOiE928up&si=XerUdWbs4G3U-TIV)
 
 ## 🧩 Project Idea and Code Overview
 
-The project demonstrates how a basic game works from new game to pause menu to stting difficulty and even seeing high scores!
+The project demonstrates how a basic game works from new game to pause menu to setting difficulty and even seeing high scores!
 
 ### Core Functionality
 - The user starts at the main menu.
@@ -62,7 +62,7 @@ The project demonstrates how a basic game works from new game to pause menu to s
   - Controls: Help menu showcasing controls.
 
 ### Main Components
-- **main.cpp:** Runs the Game loop until user escapes or closes the window  
+- **main.cpp:** Runs the Game loop until user escapes or closes the window.  
 - **support.h / support.cpp:** Renders all the game screens, player car movement, spawning opposing cars, updating high scores, changing difficulty, etc.
 
 

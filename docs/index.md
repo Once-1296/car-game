@@ -76,11 +76,11 @@ Here’s a couple of videos of the running game:
 
 
 <video controls width="100%">
-  <source src="../../assets/vid0.mp4" type="video/mp4">
+  <source src="assets/vid0.mp4" type="video/mp4">
   Sorry, your browser doesn't support embedded videos.
 </video>
 <video controls width="100%">
-  <source src="../../assets/vid1.mp4" type="video/mp4">
+  <source src="assets/vid1.mp4" type="video/mp4">
   Sorry, your browser doesn't support embedded videos.
 </video>
 This demo shows the real-time gameplay.

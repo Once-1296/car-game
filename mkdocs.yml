@@ -1,7 +1,7 @@
-site_name: Electronic Circuit Simulator
-site_url: https://once-1296.github.io/Electronic-Circuit-Simulator
-repo_url: https://github.com/Once-1296/Electronic-Circuit-Simulator
-repo_name: Once-1296/Electronic-Circuit-Simulator
+site_name: Endless car Highway
+site_url: https://once-1296.github.io/car-game
+repo_url: https://github.com/Once-1296/car-game
+repo_name: Once-1296/car-game
 theme:
   name: material
   features:

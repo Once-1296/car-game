@@ -29,7 +29,7 @@ For a visual setup guide, watch this tutorial:
 **SFML (Simple and Fast Multimedia Library)** is a C++ library for graphics, audio, and input handling.  
 It allows developers to easily create 2D visualizations, games, and interactive tools.
 
-This project uses SFML to render electronic circuit diagrams and visualize the current and voltage distribution dynamically.
+This project uses SFML to render esmooth gameplay of a 2D, 4 lane Car game.
 
 ![SFML Docs Page](assets/img2.png)
 
@@ -60,7 +60,6 @@ The project demonstrates how a basic game works from new game to pause menu to s
   - High Scores: See top scores.
   - Options: Set difficulty from easy, medium, hard.
   - Controls: Help menu showcasing controls.
-- Results are displayed in both text and graphical form.
 
 ### Main Components
 - **main.cpp:** Runs the Game loop until user escapes or closes the window  

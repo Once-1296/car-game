@@ -29,7 +29,7 @@ For a visual setup guide, watch this tutorial:
 **SFML (Simple and Fast Multimedia Library)** is a C++ library for graphics, audio, and input handling.  
 It allows developers to easily create 2D visualizations, games, and interactive tools.
 
-This project uses SFML to render esmooth gameplay of a 2D, 4 lane Car game.
+This project uses SFML to render smooth gameplay of a 2D, 4 lane Car game.
 
 ![SFML Docs Page](assets/img2.png)
 

@@ -1,0 +1,42 @@
+site_name: Electronic Circuit Simulator
+site_url: https://once-1296.github.io/Electronic-Circuit-Simulator
+repo_url: https://github.com/Once-1296/Electronic-Circuit-Simulator
+repo_name: Once-1296/Electronic-Circuit-Simulator
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.expand
+    - navigation.sections
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+    - content.code.annotate
+    - palette.toggle
+  palette:
+    - scheme: default
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - License: LICENSE.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - codehilite
+  - admonition
+  - footnotes

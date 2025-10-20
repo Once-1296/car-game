@@ -1,6 +1,17 @@
-So this is my second project in sfml. It is based on a simple nokia car game. You control a car by four arrow keys.
-The opposing vehicles' speed increases with time.
-The game saves your highest five scores in the 3 difficulty modes.
-The 3 difficulty modes easy,medium and hard differ in the initial speed of opposing vehicles as well as the increment in their speed with time.
-Currently I'm trying to adjust the different speeds and increments of the 3 opposing vehicles(car,truck and van) to make sure nothing is exploitable.
-If you can help me improve this code thank you very much.
+#  2D Retro Car Game
+
+This project is a simple 2D four lane car game with top down movement built with **SFML (Simple and Fast Multimedia Library)**.  
+It's fun, easy to play with 3 difficulty options. Track your high scores, sharpen your reflexes and dodge em all.
+
+### Features
+- Built with **C++ and SFML**
+- Easy to play, entertaining Retro mobile game on Windows
+- Simple up-down, left-right keys for movement
+- Easy-to-run Windows executable
+
+### How to Run
+Download the ZIP from the main directory, extract, and run the `.exe` file.
+
+### Documentation
+Full project documentation is available at:  
+👉 [once-1296.github.io/car-game](https://once-1296.github.io/car-game)

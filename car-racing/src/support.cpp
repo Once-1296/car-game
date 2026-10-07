@@ -82,11 +82,7 @@ void support::pollEvents()
 
 int support::retscreen()
 {
-		if (this->index == 0 && this->lastKey.value_or(sf::Keyboard::Key::Unknown) == sf::Keyboard::Key::Enter)
-	{
-		return 1;
-	}
-	else if(this->lastKey.value_or(sf::Keyboard::Key::Unknown) == sf::Keyboard::Key::Backspace)
+		if (this->lastKey.value_or(sf::Keyboard::Key::Unknown) == sf::Keyboard::Key::Backspace)
 	{
 		return 1;
 	}

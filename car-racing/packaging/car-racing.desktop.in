@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Endless Car Highway
+Comment=Top-down 4-lane car dodging game
+Exec=@INSTALL_DIR@/build/car-racing
+Path=@INSTALL_DIR@/build
+Terminal=false
+Categories=Game;ArcadeGame;

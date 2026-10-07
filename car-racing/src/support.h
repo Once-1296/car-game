@@ -6,6 +6,7 @@
 #include<ctime>
 #include<sstream>
 #include<fstream>
+#include<filesystem>
 #include"SFML/Audio.hpp"
 #include"SFML/Graphics.hpp"
 #include"SFML/Network.hpp"
@@ -76,6 +77,16 @@ private:
 	double rowstate,ceiling,floor;
 	float ht[4],ht2[3],ht3[2],ht4[2];
 	bool keyHeld1,keyHeld2;
+	// Bundled, read-only resources (fonts, default data templates), resolved
+	// relative to the running executable rather than the working directory.
+	std::filesystem::path resourceDir;
+	// Per-user, writable save data (difficulty/gamestate/high scores),
+	// under $XDG_DATA_HOME or ~/.local/share -- independent of where the
+	// program is installed.
+	std::filesystem::path userDataDir;
+	void initPaths();
+	std::string resourcePath(const std::string& relative) const;
+	std::string dataPath(const std::string& filename) const;
 	void initWindow();
 	void initVariables();
 	void initFonts();

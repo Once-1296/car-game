@@ -9,12 +9,19 @@ CMake-based Linux build.
 ```
 car-racing/
 ├── src/          main.cpp, support.cpp, support.h
-├── data/         save data read/written at runtime (scores, difficulty, state)
+├── data/         bundled default save-data templates (seeded into
+│                 ~/.local/share/car-racing/saves/ on first run)
 ├── assets/fonts/ Raleway + Asman font files
-├── packaging/    desktop launcher (no terminal window)
-├── scripts/      build.sh / run.sh
+├── packaging/    car-racing.desktop template (no terminal window)
+├── scripts/      build.sh / run.sh / install.sh
 └── CMakeLists.txt
 ```
+
+Resource paths are resolved relative to the running executable's own
+location, not the working directory (see `support::initPaths()` in
+`src/support.cpp`), so the game runs the same whether you launch it from
+the build tree, an installed prefix, or a desktop icon. See
+`ARCHITECTURE.md` for the full breakdown.
 
 ## Build
 
@@ -28,10 +35,10 @@ sudo pacman -S sfml cmake
 ```
 
 This configures and builds into `build/`, copying `assets/` and `data/`
-alongside the binary (the game reads/writes those relative to its working
-directory, same as on Windows).
+alongside the binary for convenience when running straight out of the
+build tree.
 
-## Run
+## Run (without installing)
 
 ```sh
 ./scripts/run.sh
@@ -39,20 +46,25 @@ directory, same as on Windows).
 
 This detaches the game from the terminal (`setsid` + `disown`), so the
 shell is freed immediately instead of sitting blocked behind the game
-window for the duration of the session.
+window for the duration of the session. Save data still goes to
+`~/.local/share/car-racing/saves/` either way.
 
-### Launching without a terminal at all
+## Install
 
-To get a normal desktop-app experience — double-click an icon, no
-terminal window involved at any point — install the `.desktop` launcher:
+For a real install — launchable from anywhere, a desktop icon, no
+dependency on this directory sticking around:
 
 ```sh
-./packaging/install-desktop-entry.sh
+./scripts/install.sh            # user-level, no root: ~/.local/{bin,share}
+./scripts/install.sh --system   # machine-wide: /usr/local (needs sudo)
 ```
 
-This writes `~/.local/share/applications/car-racing.desktop` with
-`Terminal=false`, pointing at your build. The game then shows up as
-"Endless Car Highway" in your application launcher.
+This builds, runs `cmake --install`, and drops a `Terminal=false` `.desktop`
+entry so the game shows up as "Endless Car Highway" in your application
+launcher. Read data (fonts, default save templates) lives under
+`<prefix>/share/car-racing/`; your actual save data lives separately, under
+`~/.local/share/car-racing/saves/`, so reinstalling or upgrading never
+touches your scores.
 
 ## Controls
 

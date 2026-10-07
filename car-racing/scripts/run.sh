@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# Launches the built game detached from the terminal, so the shell that
-# started it is freed immediately and no console sticks around behind the
-# game window. Use packaging/car-racing.desktop instead for a desktop/app
-# launcher icon that never touches a terminal at all.
+# Runs the build-tree binary (not an installed copy -- see scripts/install.sh
+# for that) detached from the terminal, so the shell that started it is
+# freed immediately and no console sticks around behind the game window.
+# The binary finds its own assets relative to its executable path, so this
+# no longer needs to run from inside build/.
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -13,6 +14,5 @@ if [[ ! -x "$BIN" ]]; then
     "$ROOT_DIR/scripts/build.sh"
 fi
 
-cd "$ROOT_DIR/build"
 setsid "$BIN" >/dev/null 2>&1 < /dev/null &
 disown

@@ -2,7 +2,6 @@
 Type=Application
 Name=Endless Car Highway
 Comment=Top-down 4-lane car dodging game
-Exec=@INSTALL_DIR@/build/car-racing
-Path=@INSTALL_DIR@/build
+Exec=@CMAKE_INSTALL_FULL_BINDIR@/car-racing
 Terminal=false
 Categories=Game;ArcadeGame;

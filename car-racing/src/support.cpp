@@ -1,4 +1,64 @@
 #include "support.h"
+#include <cstdlib>
+
+void support::initPaths()
+{
+	namespace fs = std::filesystem;
+
+	fs::path exeDir;
+	std::error_code ec;
+	fs::path exePath = fs::read_symlink("/proc/self/exe", ec);
+	exeDir = ec ? fs::current_path() : exePath.parent_path();
+
+	// Build-tree layout: CMake copies assets/ and data/ next to the binary,
+	// so running straight out of build/ keeps working unchanged.
+	if (fs::exists(exeDir / "assets"))
+	{
+		this->resourceDir = exeDir;
+	}
+	else
+	{
+		// Installed layout: <prefix>/bin/car-racing + <prefix>/share/car-racing/{assets,data}
+		this->resourceDir = exeDir.parent_path() / "share" / "car-racing";
+	}
+
+	const char* xdgDataHome = std::getenv("XDG_DATA_HOME");
+	const char* home = std::getenv("HOME");
+	fs::path dataHome = (xdgDataHome && *xdgDataHome)
+		? fs::path(xdgDataHome)
+		: fs::path(home ? home : ".") / ".local" / "share";
+	// "saves" keeps this distinct from <prefix>/share/car-racing/data even
+	// when $XDG_DATA_HOME and the install prefix are the same directory
+	// (the default --prefix ~/.local install puts resources at exactly
+	// ~/.local/share/car-racing) -- otherwise a reinstall would silently
+	// overwrite the player's saved scores with the bundled defaults.
+	this->userDataDir = dataHome / "car-racing" / "saves";
+
+	std::error_code mkec;
+	fs::create_directories(this->userDataDir, mkec);
+
+	// Seed per-user save files from the bundled defaults on first run only;
+	// an existing save is never overwritten.
+	for (const char* name : {"difficulty.txt", "gamestate.txt", "high scores.txt"})
+	{
+		fs::path dest = this->userDataDir / name;
+		if (!fs::exists(dest))
+		{
+			std::error_code cpec;
+			fs::copy_file(this->resourceDir / "data" / name, dest, cpec);
+		}
+	}
+}
+
+std::string support::resourcePath(const std::string& relative) const
+{
+	return (this->resourceDir / relative).string();
+}
+
+std::string support::dataPath(const std::string& filename) const
+{
+	return (this->userDataDir / filename).string();
+}
 
 void support::initWindow()
 {
@@ -28,7 +88,7 @@ void support::initVariables()
 
 void support::initFonts()
 {
-	if (!this->font.openFromFile("assets/fonts/Raleway-Bold.ttf"))
+	if (!this->font.openFromFile(this->resourcePath("assets/fonts/Raleway-Bold.ttf")))
 	{
 		std::cout << "ERROR:GAME::::INITFONTS::Failed to load font" << "\n";
 	}
@@ -43,6 +103,7 @@ void support::initText()
 
 support::support() : uiText(this->font), uiTextgame(this->font)
 {
+	this->initPaths();
 	this->initWindow();
 	this->initFonts();
 	this->initText();
@@ -277,7 +338,7 @@ void support::screenopt()
 		this->uiText.setPosition(sf::Vector2f(this->videoMode.size.x * 0.5f, this->videoMode.size.y * 0.6f));
 		this->uiTexts1.push_back(this->uiText);
 		std::ifstream file0;
-		file0.open("data/difficulty.txt");
+		file0.open(this->dataPath("difficulty.txt"));
 		std::string word;
 		getline(file0, word);
 		if (word == "Easy")
@@ -302,7 +363,7 @@ void support::screenopt()
 		this->rect.setSize(sf::Vector2f(1.0f * this->videoMode.size.x, 1.0f * this->rc.size.y));
 		this->rect.setFillColor(sf::Color::Green);
 		std::ofstream file;
-		file.open("data/difficulty.txt");
+		file.open(this->dataPath("difficulty.txt"));
 		switch (this->index2)
 		{
 		case 0:
@@ -335,7 +396,7 @@ void support::screenhs()
 	{
 		this->pollEvents();
 		this->uiTexts1.clear();
-		file.open("data/high scores.txt");
+		file.open(this->dataPath("high scores.txt"));
 		while (getline(file, line))
 		{
 			ss << line << "\n";
@@ -389,7 +450,7 @@ void support::screenhs()
 void support::clearhs()
 {
 	std::ofstream filewrite;
-	filewrite.open("data/high scores.txt");
+	filewrite.open(this->dataPath("high scores.txt"));
 	filewrite << "Easy\n1.0\n2.0\n3.0\n4.0\n5.0\n";
 	filewrite << "Medium\n1.0\n2.0\n3.0\n4.0\n5.0\n";
 	filewrite << "Hard\n1.0\n2.0\n3.0\n4.0\n5.0\n";
@@ -479,7 +540,7 @@ void support::screenng()
 void support::initGameState()
 {
 	std::ofstream file;
-	file.open("data/gamestate.txt");
+	file.open(this->dataPath("gamestate.txt"));
 	file << "true";
 	file.close();
 }
@@ -567,7 +628,7 @@ void support::updateObjects3()
 void support::exitgame()
 {
 	std::ofstream fileexit;
-	fileexit.open("data/gamestate.txt");
+	fileexit.open(this->dataPath("gamestate.txt"));
 	fileexit << "false";
 	fileexit.close();
 	this->updateScores();
@@ -688,7 +749,7 @@ void support::initgamevariables()
 {
 	std::ifstream file;
 	this->lap = 0;
-	file.open("data/difficulty.txt");
+	file.open(this->dataPath("difficulty.txt"));
 	std::string word;
 	getline(file, word);
 	this->opvehictimerincr = 5.f;
@@ -734,7 +795,7 @@ void support::initgamevariables()
 int support::checkGameState()
 {
 	std::ifstream file;
-	file.open("data/gamestate.txt");
+	file.open(this->dataPath("gamestate.txt"));
 	std::string word;
 	getline(file, word);
 	file.close();
@@ -946,7 +1007,7 @@ void support::updateopvehicles()
 {
 	int somenum = 1,somenum2 = 0;
 	std::ifstream file;
-	file.open("data/difficulty.txt");
+	file.open(this->dataPath("difficulty.txt"));
 	std::string word;
 	getline(file, word);
 	file.close();
@@ -1103,7 +1164,7 @@ void support::moveUsercar()
 	sf::FloatRect temp;
 	temp = this->usercar[4].getGlobalBounds();
 	std::ofstream file;
-	file.open("data/gamestate.txt");
+	file.open(this->dataPath("gamestate.txt"));
 	bool t1 = false, t2 = false, t3 = false;
 	for (int i = 0; i < this->opcarfin.size(); i++)
 	{
@@ -1142,10 +1203,10 @@ void support::updateScores()
 	std::string difficulty,line,word;
 	int scorearr[5] = {0,0,0,0,0};
 	std::string lines[18];
-	file.open("data/difficulty.txt");
+	file.open(this->dataPath("difficulty.txt"));
 	getline(file, difficulty);
 	file.close();
-	file.open("data/high scores.txt");
+	file.open(this->dataPath("high scores.txt"));
 	if (difficulty == "Easy")
 	{
 		getline(file, line);
@@ -1269,7 +1330,7 @@ void support::updateScores()
 	}
 	file.close();
 	std::ofstream ofile;
-	ofile.open("data/high scores.txt");
+	ofile.open(this->dataPath("high scores.txt"));
 	for (int i = 0; i < 18; i++)
 	{
 		ofile << lines[i] << "\n";
@@ -1292,7 +1353,7 @@ void support::screencontrol()
 	{
 		this->pollEvents();
 		this->uiTexts1.clear();
-		file.open("data/controls.txt");
+		file.open(this->resourcePath("data/controls.txt"));
 		while (getline(file, line))
 		{
 			ss << line << "\n";

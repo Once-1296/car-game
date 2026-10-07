@@ -1,0 +1,192 @@
+<svg viewBox="0 0 1100 1300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrow-dash" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1100" height="1300" fill="#ffffff"/>
+
+  <text x="550" y="28" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">Endless Car Highway — Game Flow</text>
+  <text x="550" y="48" text-anchor="middle" font-size="13" fill="#64748b">main.cpp drives a screen state machine in the support class; state is persisted to data/*.txt</text>
+
+  <!-- ============ NODES ============ -->
+
+  <!-- 1 Start -->
+  <g>
+    <rect x="430" y="64" width="240" height="56" rx="28" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+    <text x="550" y="86" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Launch car-racing</text>
+    <text x="550" y="104" text-anchor="middle" font-size="11" fill="#334155">main.cpp — seed RNG, open window</text>
+  </g>
+
+  <!-- 2 Title -->
+  <g>
+    <rect x="450" y="167" width="200" height="56" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="550" y="190" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a8a">Title Screen</text>
+    <text x="550" y="208" text-anchor="middle" font-size="11" fill="#1e3a8a">screentitle()</text>
+  </g>
+
+  <!-- Row 3: menu branches -->
+  <g>
+    <rect x="55" y="292" width="190" height="56" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="150" y="315" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a8a">New Game</text>
+    <text x="150" y="333" text-anchor="middle" font-size="11" fill="#1e3a8a">index 0 → screenng()</text>
+  </g>
+  <g>
+    <rect x="305" y="292" width="190" height="56" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="400" y="315" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a8a">High Scores</text>
+    <text x="400" y="333" text-anchor="middle" font-size="11" fill="#1e3a8a">screenhs()</text>
+  </g>
+  <g>
+    <rect x="545" y="292" width="210" height="56" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="650" y="315" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a8a">Options: Difficulty</text>
+    <text x="650" y="333" text-anchor="middle" font-size="11" fill="#1e3a8a">screenopt()</text>
+  </g>
+  <g>
+    <rect x="815" y="292" width="170" height="56" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="900" y="315" text-anchor="middle" font-size="13" font-weight="700" fill="#1e3a8a">Controls</text>
+    <text x="900" y="333" text-anchor="middle" font-size="11" fill="#1e3a8a">screencontrol()</text>
+  </g>
+
+  <!-- loop-back stubs for the three "peek and return" menu screens -->
+  <g stroke="#2563eb" stroke-width="1.6" fill="none">
+    <path d="M400,292 L400,268" marker-end="url(#arrow)"/>
+    <path d="M650,292 L650,268" marker-end="url(#arrow)"/>
+    <path d="M900,292 L900,268" marker-end="url(#arrow)"/>
+  </g>
+  <text x="400" y="262" text-anchor="middle" font-size="10" font-style="italic" fill="#475569">Backspace → Title</text>
+  <text x="650" y="262" text-anchor="middle" font-size="10" font-style="italic" fill="#475569">Backspace → Title</text>
+  <text x="900" y="262" text-anchor="middle" font-size="10" font-style="italic" fill="#475569">Backspace → Title</text>
+  <text x="650" y="366" text-anchor="middle" font-size="10" font-style="italic" fill="#475569">Up/Down writes data/difficulty.txt immediately, even before leaving the screen</text>
+
+  <!-- 7 Gameplay init -->
+  <g>
+    <rect x="400" y="420" width="300" height="60" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="550" y="444" text-anchor="middle" font-size="13" font-weight="700" fill="#78350f">Start Run — screenng() setup</text>
+    <text x="550" y="462" text-anchor="middle" font-size="11" fill="#78350f">read data/difficulty.txt · reset car, traffic, score, road</text>
+  </g>
+
+  <!-- 8 Loop -->
+  <g>
+    <rect x="390" y="532" width="320" height="60" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="550" y="556" text-anchor="middle" font-size="13" font-weight="700" fill="#78350f">Gameplay Loop (per frame)</text>
+    <text x="550" y="574" text-anchor="middle" font-size="11" fill="#78350f">spawn/move traffic · move car · scroll road strips · render</text>
+  </g>
+
+  <!-- 9 Pause branch -->
+  <g>
+    <rect x="150" y="652" width="220" height="56" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="260" y="675" text-anchor="middle" font-size="13" font-weight="700" fill="#78350f">Space held</text>
+    <text x="260" y="693" text-anchor="middle" font-size="11" fill="#78350f">→ pausescreen() loop</text>
+  </g>
+
+  <!-- 10 Collision branch -->
+  <g>
+    <rect x="720" y="652" width="240" height="56" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+    <text x="840" y="675" text-anchor="middle" font-size="13" font-weight="700" fill="#7f1d1d">Car overlaps a vehicle</text>
+    <text x="840" y="693" text-anchor="middle" font-size="11" fill="#7f1d1d">checked every frame in moveUsercar()</text>
+  </g>
+
+  <!-- 11 Pause decision -->
+  <g>
+    <rect x="140" y="772" width="240" height="60" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text x="260" y="796" text-anchor="middle" font-size="13" font-weight="700" fill="#4c1d95">Continue? Yes / No</text>
+    <text x="260" y="814" text-anchor="middle" font-size="11" fill="#4c1d95">Left/Right select · Backspace confirms</text>
+  </g>
+  <text x="260" y="846" text-anchor="middle" font-size="10" font-style="italic" fill="#475569">Yes resumes play · No ends the run, same as a collision</text>
+
+  <!-- 12 Game over -->
+  <g>
+    <rect x="410" y="900" width="280" height="56" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+    <text x="550" y="923" text-anchor="middle" font-size="13" font-weight="700" fill="#7f1d1d">Run Ends</text>
+    <text x="550" y="941" text-anchor="middle" font-size="11" fill="#7f1d1d">data/gamestate.txt → "false"</text>
+  </g>
+
+  <!-- 13 Score update -->
+  <g>
+    <rect x="380" y="1010" width="340" height="60" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+    <text x="550" y="1034" text-anchor="middle" font-size="13" font-weight="700" fill="#7f1d1d">updateScores()</text>
+    <text x="550" y="1052" text-anchor="middle" font-size="11" fill="#7f1d1d">inserts `points` into the high-scores block for the current difficulty</text>
+  </g>
+
+  <!-- 14 Exit -->
+  <g>
+    <rect x="710" y="1132" width="320" height="56" rx="28" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+    <text x="870" y="1155" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Window Closed / Escape</text>
+    <text x="870" y="1173" text-anchor="middle" font-size="11" fill="#334155">running() → false → process exits</text>
+  </g>
+
+  <!-- ============ ARROWS ============ -->
+  <g stroke="#334155" stroke-width="2" fill="none">
+    <!-- start -> title -->
+    <path d="M550,120 L550,165" marker-end="url(#arrow)"/>
+
+    <!-- title fans out to the 4 menu items -->
+    <path d="M500,223 L150,290" marker-end="url(#arrow)"/>
+    <path d="M530,223 L400,290" marker-end="url(#arrow)"/>
+    <path d="M570,223 L650,290" marker-end="url(#arrow)"/>
+    <path d="M600,223 L900,290" marker-end="url(#arrow)"/>
+
+    <!-- new game -> gameplay init -->
+    <path d="M200,348 L430,418" marker-end="url(#arrow)"/>
+
+    <!-- gameplay init -> loop -->
+    <path d="M550,480 L550,530" marker-end="url(#arrow)"/>
+
+    <!-- loop -> pause / collision branches -->
+    <path d="M470,592 L270,650" marker-end="url(#arrow)"/>
+    <path d="M630,592 L820,650" marker-end="url(#arrow)"/>
+
+    <!-- pause branch -> decision -->
+    <path d="M260,708 L260,770" marker-end="url(#arrow)"/>
+
+    <!-- decision: Yes -> back to loop -->
+    <path d="M140,790 C40,700 40,610 388,562" marker-end="url(#arrow)"/>
+    <text x="70" y="665" font-size="10" font-style="italic" fill="#475569" transform="rotate(-90 70 665)">Yes → resume</text>
+
+    <!-- decision: No -> game over -->
+    <path d="M300,832 L470,900" marker-end="url(#arrow)"/>
+    <text x="330" y="880" font-size="10" font-style="italic" fill="#475569">No</text>
+
+    <!-- collision -> game over -->
+    <path d="M800,708 L620,900" marker-end="url(#arrow)"/>
+
+    <!-- game over -> score update -->
+    <path d="M550,956 L550,1008" marker-end="url(#arrow)"/>
+
+    <!-- score update -> back to title (loops the whole run) -->
+    <path d="M378,1040 L30,1040 L30,195 L448,195" marker-end="url(#arrow)"/>
+  </g>
+  <text x="34" y="617" font-size="11" font-style="italic" fill="#475569" transform="rotate(-90 34 617)">next frame returns to the Title Screen</text>
+
+  <!-- title -> exit, dashed: can happen from any screen via Escape/window close -->
+  <g stroke="#64748b" stroke-width="2" fill="none" stroke-dasharray="6 5">
+    <path d="M650,195 L1070,195 L1070,1160 L1030,1160" marker-end="url(#arrow-dash)"/>
+  </g>
+  <text x="1075" y="677" text-anchor="middle" font-size="10" font-style="italic" fill="#64748b" transform="rotate(90 1075 677)">Escape / window close works from any screen, pollEvents() checks it every frame</text>
+
+  <!-- ============ LEGEND ============ -->
+  <g font-size="12" fill="#1e293b">
+    <text x="40" y="1230" font-size="13" font-weight="700" fill="#0f172a">Legend</text>
+
+    <rect x="40" y="1242" width="16" height="16" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1.5"/>
+    <text x="62" y="1254">Start / exit</text>
+
+    <rect x="180" y="1242" width="16" height="16" rx="3" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="202" y="1254">Menu screen (own blocking input loop)</text>
+
+    <rect x="470" y="1242" width="16" height="16" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+    <text x="492" y="1254">Gameplay loop</text>
+
+    <rect x="650" y="1242" width="16" height="16" rx="3" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="672" y="1254">Decision point</text>
+
+    <rect x="800" y="1242" width="16" height="16" rx="3" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="822" y="1254">Run-ending event</text>
+
+    <text x="40" y="1278" font-size="10" font-style="italic" fill="#64748b">Dashed = can trigger from any screen, not just the one it's drawn from.</text>
+  </g>
+</svg>
